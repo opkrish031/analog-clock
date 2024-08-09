@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Analog Clock</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+
+      * {
+        margin: 0;
+        padding: 0;
+        text-transform: capitalize;
+        font-family: "Montserrat", sans-serif;
+      }
+      body {
+        background-color: #000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 40px;
+        height: 100vh;
+      }
+      .clock-main {
+        background-color: #000;
+        height: 250px;
+        width: 250px;
+        border-radius: 50%;
+        text-align: center;
+        color: #fff;
+        box-shadow: #a876aa 0px 0px 50px;
+        position: relative;
+      }
+      .hour-hand {
+        width: 3px;
+        background-color: #fff;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        height: 65px;
+        transform: translate(-50%, -100%) rotate(0deg);
+        box-shadow: #a876aa 0px 0px 10px;
+        transform-origin: bottom center;
+      }
+      .min-hand {
+        width: 3px;
+        background-color: #fff;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        height: 100px;
+        transform: translate(-50%, -100%) rotate(0deg);
+        box-shadow: #a876aa 0px 0px 10px;
+        transform-origin: bottom center;
+      }
+      .sec-hand {
+        width: 3px;
+        background-color: #a876aa;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        height: 100px;
+        transform: translate(-50%, -100%) rotate(0deg);
+        box-shadow: #a876aa 0px 0px 10px;
+        transform-origin: bottom center;
+      }
+      .middle-dot {
+        height: 10px;
+        width: 10px;
+        background-color: #fff;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        box-shadow: #a876aa 0px 0px 10px;
+      }
+      .number {
+        position: absolute;
+        width: 25px;
+        height: 25px;
+        text-align: center;
+        font-size: 20px;
+        color: #fff;
+        font-weight: lighter;
+      }
+
+      .number3 {
+        top: 50%;
+        right: 15px;
+        transform: translate(50%, -50%);
+      }
+      .number6 {
+        bottom: 15px;
+        left: 50%;
+        transform: translate(-50%, 50%);
+      }
+      .number9 {
+        top: 50%;
+        left: 15px;
+        transform: translate(-50%, -50%);
+      }
+      .number12 {
+        top: 20px;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      /* digital */
+      .digital-clock {
+        color: #fff;
+        font-size: 30px;
+        font-weight: lighter;
+      }
+      .day{
+        font-size: 14px;
+        text-align: center;
+        letter-spacing: 0.3px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="clock-main">
+      <div class="hour-hand needle"></div>
+      <div class="min-hand needle"></div>
+      <div class="sec-hand needle" id="second"></div>
+      <div class="middle-dot"></div>
+
+      <div class="number number3">3</div>
+      <div class="number number6">6</div>
+      <div class="number number9">9</div>
+      <div class="number number12">12</div>
+    </div>
+    <div class="digital-clock">
+      <div class="time">12:00 PM</div>
+      <div class="day"></div>
+    </div>
+  </body>
+  <script>
+    let secHand = document.querySelector("#second");
+    let minHand = document.querySelector(".min-hand");
+    let hourHand = document.querySelector(".hour-hand");
+
+    function anaClock() {
+      let mainDate = new Date();
+
+      let sec = mainDate.getSeconds() * 6;
+      let min = mainDate.getMinutes() * 6;
+      let hour = mainDate.getHours()/12 * 30 + min * 0.5;
+
+      console.log(hour);
+
+      secHand.style.transform = `translate(-50%, -100%) rotate(${sec}deg)`;
+      minHand.style.transform = `translate(-50%, -100%) rotate(${min}deg)`;
+      hourHand.style.transform = `translate(-50%, -100%) rotate(${hour}deg)`;
+
+      //   digital
+      let days = [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+      ];
+
+      let months = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ];
+      let div1= document.querySelector(".time")
+      let div2= document.querySelector(".day")
+      let currentHour=mainDate.getHours();
+      let currentMin=mainDate.getMinutes();
+      let currentMonth=mainDate.getMonth();
+      let currentDay=mainDate.getDay();
+      let currentDate=mainDate.getDate();
+
+      let AMpm='AM'
+
+      if(currentHour >12){
+        AMpm='PM'
+        currentHour -= 12
+      }
+      if(currentHour <10){
+        currentHour = '0' + currentHour;
+      }
+      if(currentMin <10){
+        currentMin = '0' + currentMin;
+      }
+
+      div1.textContent= currentHour + ' : ' + currentMin + ' ' + AMpm;
+      div2.textContent= days[currentDay] + ', ' + months[currentMonth] + ' ' + currentDate;
+
+    }
+
+    setInterval(anaClock, 1000);
+  </script>
+</html>
