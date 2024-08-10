@@ -131,6 +131,7 @@
       <div class="number number6">6</div>
       <div class="number number9">9</div>
       <div class="number number12">12</div>
+      <audio src="./270164-Designed_Clock_Metronome_01.wav" preload="auto"></audio>
     </div>
     <div class="digital-clock">
       <div class="time">12:00 PM</div>
@@ -147,7 +148,10 @@
 
       let sec = mainDate.getSeconds() * 6;
       let min = mainDate.getMinutes() * 6;
-      let hour = mainDate.getHours()/12 * 30 + min * 0.5;
+      let hour = mainDate.getHours()*30+ mainDate.getMinutes()*0.5;
+      let sound= document.querySelector("audio")
+      sound.play();
+      sound.volume = 0.5;
 
       console.log(hour);
 
